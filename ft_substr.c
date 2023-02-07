@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_substr.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: esamad-j <esamad-j@student.42madrid.com    +#+  +:+       +#+        */
+/*   By: esamad-j <esamad-j@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/23 17:42:58 by esamad-j          #+#    #+#             */
-/*   Updated: 2023/02/05 05:11:44 by esamad-j         ###   ########.fr       */
+/*   Updated: 2023/02/07 18:11:35 by esamad-j         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,11 +28,14 @@ char	*ft_substr(char const *s, unsigned int start, size_t len)
 		len = len_s - start;
 	if (start > len_s)
 		return (strdup(""));
+	if (start == 0 && len == 0)
+		return ("\n");
+	
 	new = malloc(sizeof(char) * (len + 1));
 	if (new == NULL)
 		return (0);
 	i = 0;
-	while (len > 0)
+	while (len != -1)
 	{
 			new[i] = s[start];
 			i++;
@@ -48,14 +51,13 @@ char	*ft_substr(char const *s, unsigned int start, size_t len)
 	int		m;
 	int		n;
 
-	str = "Hello Please Trim me !";
+	str = "1\ni777fin.";
     m = 0;
-    n = 23;
+    n = 1;
  
     char* dest = ft_substr(str, m, n);
  
-    printf("%s\n", dest);
+    printf("%s", dest);
  
     return (0);
-}
- */
+} */
