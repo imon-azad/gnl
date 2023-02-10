@@ -6,7 +6,7 @@
 /*   By: esamad-j <esamad-j@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/05 16:57:04 by esamad-j          #+#    #+#             */
-/*   Updated: 2023/02/08 12:27:14 by esamad-j         ###   ########.fr       */
+/*   Updated: 2023/02/10 04:33:07 by esamad-j         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,4 +97,24 @@ size_t	ft_strlen(const char *s)
 	while (s[cont] != '\0')
 		cont++;
 	return (cont);
+}
+char	*ft_strdup(char *src)
+{
+	int		i;
+	int		j;
+	char	*src_with_memory;
+
+	i = 0;
+	j = 0;
+	i = ft_strlen(src);
+	src_with_memory = (char *)malloc(i * sizeof(char) + 1);
+	if (src_with_memory == NULL)
+		return (0);
+	while (src[j] != '\0')
+	{
+		src_with_memory[j] = src[j];
+		j++;
+	}
+	src_with_memory[j] = '\0';
+	return (src_with_memory);
 }

@@ -6,7 +6,7 @@
 /*   By: esamad-j <esamad-j@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/05 03:40:13 by esamad-j          #+#    #+#             */
-/*   Updated: 2023/02/08 13:23:56 by esamad-j         ###   ########.fr       */
+/*   Updated: 2023/02/10 05:22:48 by esamad-j         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,93 +15,118 @@
 #ifndef BUFFER_SIZE
 #define BUFFER_SIZE 10
 #endif
-
-char	*get_next_line(int fd)
+char *sobrante(char *buffer)
 {
-    char *buffer;
-    char *aux;
-    char *aux2;
-    static char *guardado;
-    static int k = 0;
-	size_t nread;
-    int i = 0;
-    buffer = malloc(BUFFER_SIZE);
-    aux = malloc (150);
-    aux2 = malloc (150);
-    guardado = malloc(150);
-    nread = read(fd, buffer, BUFFER_SIZE);
-     if (nread == -1)
+    char *guardado;
+    int i;
+    i = 0;
+    while (buffer[i] && buffer[i] != '\n')
+		i++;
+    guardado = malloc(i + 2);
+    guardado = ft_substr(buffer, i + 1 , BUFFER_SIZE - i);
+    
+    return (guardado);
+    
+}
+char *ft_read(int fd, char *buffer)
+{
+  size_t nread;
+  buffer = malloc(BUFFER_SIZE + 1);
+  nread = read(fd, buffer, BUFFER_SIZE);
+    if (nread == -1)
     {
         printf("ERROR EN READ");
         return (0);
     }
+    return (buffer);
+}
+char *liberar(char *buffer, char *buf2)
+{
+    char *tem;
+    
+    tem = ft_strjoin(buffer, buf2);
+    free(buffer);
+    return (tem);
+}
+/* char *linea(char *buffer)
+{
+    
+} */
+char	*get_next_line(int fd)
+{
+    char *aux;
+    static char *buffer;
+    size_t nread;
+    int j = 0;
+    int i = 0;
+    
 
-    while (ft_strchr(buffer, 10) == 0)
+    aux = malloc (150);
+
+    printf("_%s_", buffer);
+    if(buffer == NULL)
+        buffer = ft_read(fd, buffer);
+    
+    while (ft_strchr(buffer, 10) == 0 && buffer[i])
     {
-        printf("%s\n", aux);
         while (buffer[i] != '\0')
         {
-            aux[k] = buffer[i];
+            aux[j] = buffer[i];
             i++;
-            k++;
+            j++;
+            
         }
+        
         i = 0;
-        printf("%s", aux);
-        printf("%s\n", buffer);
-        printf("-------\n");
+        free(buffer);
+        buffer = ft_read(fd, buffer);
         
-        nread = read(fd, buffer, BUFFER_SIZE);
-        /*  printf("%s\n", buffer);
-         */
-        /* if (ft_strchr(buffer, 10) == 0)
+        /* if (!buffer[i])
         {
-            strcpy(aux, ft_strjoin(aux, buffer));
-            printf("----if---\n");
-            printf("%s\n", aux);
-            printf("----if---\n");
-        }  */
-        
-        /* printf("----2---\n");
-        printf("%zi\n", nread);
-        printf("%s\n", buffer);
-        printf("%s\n", aux);
-        printf("-------\n"); */
+            
+            if (ft_strchr(buffer, 10) == 0)
+                {
+                    buffer[i] = '\n';
+                }
+        } */
     }
     
     while (buffer[i] != '\0')
     {
         if (buffer[i] == 10)
         {
-            aux2 = ft_substr(buffer, 0, i);
-            strlcpy(guardado, buffer, BUFFER_SIZE + 1);
-            printf("guardado:_%s_", guardado);
+            aux = liberar(aux, ft_substr(buffer, 0, i));
             break;
-             printf("%s", aux2);
-             printf("---aux2--\n");
         }
         i++;
     }
-    
-    printf("%s", aux2);
-    return (ft_strjoin(aux, aux2));
+    buffer = sobrante(buffer);
+    return (aux);
 }
 
 int	main(void)
 {
 	char *leido;
     int fd;
-    
+    int i = 0;
 	fd = open("hola.txt", O_RDONLY);
 	if (fd < 0)
-		printf("cagaste, ERROR EN OPEN");
+	{
+        printf("cagaste, ERROR EN OPEN");
+        return (0);
+    }
     leido = get_next_line(fd);
     printf("---main---\n");
     printf("%s", leido);
-  /*   free(leido);
+    free(leido);
     leido = get_next_line(fd);
     printf("---main---\n");
-    printf("%s", leido); */
-   /*  while (leido)
+    printf("%s", leido);
+    free(leido);
+    leido = get_next_line(fd);
+    printf("---main---\n");
+    printf("%s", leido); 
+  /*   while (leido)
     {
     printf("%s", leido);
     fflush(stdin);
