@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: esamad-j <esamad-j@student.42madrid.com    +#+  +:+       +#+        */
+/*   By: esamad-j <esamad-j@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/02/05 03:40:13 by esamad-j          #+#    #+#             */
-/*   Updated: 2023/02/10 05:22:48 by esamad-j         ###   ########.fr       */
+/*   Created: 2023/02/10 19:59:59 by esamad-j          #+#    #+#             */
+/*   Updated: 2023/02/10 21:10:22 by esamad-j         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,93 +15,41 @@
 #ifndef BUFFER_SIZE
 #define BUFFER_SIZE 10
 #endif
-char *sobrante(char *buffer)
-{
-    char *guardado;
-    int i;
-    i = 0;
-    while (buffer[i] && buffer[i] != '\n')
-		i++;
-    guardado = malloc(i + 2);
-    guardado = ft_substr(buffer, i + 1 , BUFFER_SIZE - i);
-    
-    return (guardado);
-    
-}
-char *ft_read(int fd, char *buffer)
-{
-  size_t nread;
-  buffer = malloc(BUFFER_SIZE + 1);
-  nread = read(fd, buffer, BUFFER_SIZE);
-    if (nread == -1)
-    {
-        printf("ERROR EN READ");
-        return (0);
-    }
-    return (buffer);
-}
-char *liberar(char *buffer, char *buf2)
-{
-    char *tem;
-    
-    tem = ft_strjoin(buffer, buf2);
-    free(buffer);
-    return (tem);
-}
-/* char *linea(char *buffer)
-{
-    
-} */
+
+
 char	*get_next_line(int fd)
 {
-    char *aux;
-    static char *buffer;
-    size_t nread;
-    int j = 0;
-    int i = 0;
-    
+  static char *resto;
+  char *buffer;
+  char *aux;
+  int i;
+  
+  i = 1;
+  buffer = ft_calloc(sizeof(char), BUFFER_SIZE);
+  i = read(fd, buffer, BUFFER_SIZE);
+  printf("%ld\n", ft_strchr(buffer, 10) - buffer);
+  
+  // ft_substr(buffer, 0, )
+return (NULL);
 
-    aux = malloc (150);
-
-    printf("_%s_", buffer);
-    if(buffer == NULL)
-        buffer = ft_read(fd, buffer);
-    
-    while (ft_strchr(buffer, 10) == 0 && buffer[i])
-    {
-        while (buffer[i] != '\0')
-        {
-            aux[j] = buffer[i];
-            i++;
-            j++;
-            
-        }
-        
-        i = 0;
+  /* if(ft_strchr(resto, 10) == 0) */
+ /*  while (i >= 0)
+  {
+    buffer = ft_calloc(sizeof(char), BUFFER_SIZE);
+    i = read(fd, buffer, BUFFER_SIZE);
+    while(ft_strchr(buffer, 10) == 0)
+      {
+        aux = ft_strjoin(resto, buffer);
+        free(resto);
         free(buffer);
-        buffer = ft_read(fd, buffer);
-        
-        /* if (!buffer[i])
-        {
-            
-            if (ft_strchr(buffer, 10) == 0)
-                {
-                    buffer[i] = '\n';
-                }
-        } */
-    }
+        buffer = ft_calloc(sizeof(char), BUFFER_SIZE);
+        i += read(fd, buffer, BUFFER_SIZE);
+        resto = aux;
+      }
+      
+  } */
+  
     
-    while (buffer[i] != '\0')
-    {
-        if (buffer[i] == 10)
-        {
-            aux = liberar(aux, ft_substr(buffer, 0, i));
-            break;
-        }
-        i++;
-    }
-    buffer = sobrante(buffer);
-    return (aux);
 }
 
 int	main(void)
@@ -119,13 +67,13 @@ int	main(void)
     printf("---main---\n");
     printf("%s", leido);
     free(leido);
-    leido = get_next_line(fd);
+    /* leido = get_next_line(fd);
     printf("---main---\n");
     printf("%s", leido);
     free(leido);
     leido = get_next_line(fd);
     printf("---main---\n");
-    printf("%s", leido); 
+    printf("%s", leido);  */
   /*   while (leido)
     {
     printf("%s", leido);
@@ -134,7 +82,7 @@ int	main(void)
     leido = get_next_line(fd);
     } */
     
-    free(leido);
+  free(leido);
 	close(fd);
 	return (0);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line_utils.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: esamad-j <esamad-j@student.42madrid.com    +#+  +:+       +#+        */
+/*   By: esamad-j <esamad-j@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/05 16:57:04 by esamad-j          #+#    #+#             */
-/*   Updated: 2023/02/10 04:33:07 by esamad-j         ###   ########.fr       */
+/*   Updated: 2023/02/10 21:15:31 by esamad-j         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,18 +40,19 @@ char	*ft_strjoin(char const *str1, char const *str2)
 	return (new_str);
 }
 
-char	*ft_strchr(const char *s, int c)
+int	ft_strchr(const char *s, int c)
 {
 	int		i;
 	char	aux;
-
+	if(!s)
+		return(NULL);
 	i = 0;
 	aux = c;
 	while (s[i] != '\0')
 	{
 		if (s[i] == aux)
 		{
-			return ((char *)&s[i]);
+			return (i);
 		}
 		i++;
 	}
@@ -117,4 +118,23 @@ char	*ft_strdup(char *src)
 	}
 	src_with_memory[j] = '\0';
 	return (src_with_memory);
+}
+
+void	*ft_calloc(size_t count, size_t size)
+{
+	char	*new;
+	int		i;
+
+	if ((count >= SIZE_MAX && size > 1) || (size >= SIZE_MAX && count > 1))
+		return (0);
+	i = 0;
+	new = (char *)malloc(count * size);
+	if (new == NULL)
+		return (0);
+	while (i < (int)(count * size))
+	{
+		new[i] = 0;
+		i++;
+	}
+	return (new);
 }
