@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: imonazad <imonazad@student.42.fr>          +#+  +:+       +#+        */
+/*   By: esamad-j <esamad-j@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/10 19:59:59 by esamad-j          #+#    #+#             */
-/*   Updated: 2023/02/11 16:10:33 by imonazad         ###   ########.fr       */
+/*   Updated: 2023/02/12 04:54:33 by esamad-j         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,46 +16,53 @@
 #define BUFFER_SIZE 10
 #endif
 
-
+char *ft_read(int fd, size_t *byte_read, char *resto)
+{
+  char *aux;
+  char *buffer;
+  
+  if (!resto)
+    resto = ft_calloc(1,1);
+  if(ft_strchr(resto, 10) != -1)
+    return (resto);
+  buffer = ft_calloc(sizeof(char), BUFFER_SIZE + 1);
+  *byte_read += read(fd, buffer, BUFFER_SIZE);
+  //printf("==%zu==",*byte_read);
+  aux = ft_strjoin(resto, buffer);
+  free(resto);
+  free(buffer);
+ 
+  resto = aux;
+  
+  return (resto);
+}
+char *guardar( size_t byte_read, char *resto)
+{
+  char *temp;
+  temp = ft_substr(resto, ft_strchr(resto, 10) + 1, byte_read);
+  free(resto);
+  return(temp);
+}
 char	*get_next_line(int fd)
 {
-  static char *resto;
-  char *buffer;
+  static char *resto = NULL;
+  size_t byte_read = 0;
   char *aux;
-  int i;
-  
-  i = 1;
-  /* buffer = ft_calloc(sizeof(char), BUFFER_SIZE);
-  i = read(fd, buffer, BUFFER_SIZE);
-  printf("%s",buffer);
-  printf("_%d_\n", ft_strchr(buffer, '\n'));
-  
-  aux = ft_substr(buffer, 0, ft_strchr(buffer, '\n'));
-  free(buffer);
-  printf("%s",aux);
-  return (aux);
- */
-  /* if(ft_strchr(resto, 10) == 0) */
-  while (i >= 0)
+  printf("º%sº",resto);
+  resto = ft_read(fd, &byte_read, resto);
+ 
+  while(ft_strchr(resto, 10) == -1 && resto)
+    resto = ft_read(fd, &byte_read, resto);
+  resto[ft_strlen(resto)+1] = '\n';
+  if(ft_strchr(resto, 10) != -1)
   {
-    buffer = ft_calloc(sizeof(char), BUFFER_SIZE);
-    i = read(fd, buffer, BUFFER_SIZE);
-    printf("buffer:%s",buffer);
-    while(ft_strchr(buffer, 10) == -1)
-      {
-        aux = ft_strjoin(resto, buffer);
-        free(resto);
-        free(buffer);
-        buffer = ft_calloc(sizeof(char), BUFFER_SIZE);
-        i += read(fd, buffer, BUFFER_SIZE);
-        resto = aux;
-        printf("%s",resto);
-      }
-      
-      
+    
+    /* printf("SOBRA==%s==\n",ft_substr(resto, ft_strchr(resto, 10) + 1, byte_read)); */
+    aux = ft_substr(resto, 0, ft_strchr(resto, 10));
+    resto = guardar(byte_read, resto);
+    printf("^%s^",resto);
   }
-  
-    return(0);
+    return(aux);
 }
 
 int	main(void)
@@ -68,11 +75,11 @@ int	main(void)
 	{
         printf("cagaste, ERROR EN OPEN");
         return (0);
-    }
+  }
     leido = get_next_line(fd);
     printf("---main---\n");
-    printf("%s", leido);
-    /* free(leido);
+   /*  printf("%s", leido);
+    free(leido);
     leido = get_next_line(fd);
     printf("---main---\n");
     printf("%s", leido);
@@ -80,13 +87,13 @@ int	main(void)
     leido = get_next_line(fd);
     printf("---main---\n");
     printf("%s", leido);  */
-  /*   while (leido)
+    while (leido)
     {
     printf("%s", leido);
     fflush(stdin);
     free(leido);
     leido = get_next_line(fd);
-    } */
+    }
     
   free(leido);
 	close(fd);

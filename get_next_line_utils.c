@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line_utils.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: imonazad <imonazad@student.42.fr>          +#+  +:+       +#+        */
+/*   By: esamad-j <esamad-j@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/05 16:57:04 by esamad-j          #+#    #+#             */
-/*   Updated: 2023/02/11 01:20:30 by imonazad         ###   ########.fr       */
+/*   Updated: 2023/02/12 02:47:07 by esamad-j         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,9 +21,9 @@ char	*ft_strjoin(char const *str1, char const *str2)
 
 	i = 0;
 	j = 0;
-	new_len = (strlen(str1) + strlen(str2));
+	new_len = (ft_strlen(str1) + ft_strlen(str2));
 	new_str = malloc(sizeof(char) * (new_len + 1));
-	if (!new_str)
+	if (!new_str || !str1 || !str2)
 		return (0);
 	while (str1[i] != '\0')
 	{
@@ -38,6 +38,7 @@ char	*ft_strjoin(char const *str1, char const *str2)
 	}
 	new_str[i] = 0;
 	return (new_str);
+	
 }
 
 int	ft_strchr(const char *s, char c)
@@ -92,7 +93,8 @@ char	*ft_substr(char const *s, unsigned int start, size_t len)
 size_t	ft_strlen(const char *s)
 {
 	size_t	cont;
-
+	if(!s)
+		return (0);
 	cont = 0;
 	while (s[cont] != '\0')
 		cont++;
