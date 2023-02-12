@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line_utils.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: esamad-j <esamad-j@student.42.fr>          +#+  +:+       +#+        */
+/*   By: imonazad <imonazad@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/05 16:57:04 by esamad-j          #+#    #+#             */
-/*   Updated: 2023/02/10 21:15:31 by esamad-j         ###   ########.fr       */
+/*   Updated: 2023/02/11 01:20:30 by imonazad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,12 +40,12 @@ char	*ft_strjoin(char const *str1, char const *str2)
 	return (new_str);
 }
 
-int	ft_strchr(const char *s, int c)
+int	ft_strchr(const char *s, char c)
 {
 	int		i;
 	char	aux;
 	if(!s)
-		return(NULL);
+		return(0);
 	i = 0;
 	aux = c;
 	while (s[i] != '\0')
@@ -56,9 +56,8 @@ int	ft_strchr(const char *s, int c)
 		}
 		i++;
 	}
-	if (aux == '\0')
-		return ((char *)&s[i]);
-	return (0);
+	
+	return (-1);
 }
 
 char	*ft_substr(char const *s, unsigned int start, size_t len)

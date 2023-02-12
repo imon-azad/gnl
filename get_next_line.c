@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: esamad-j <esamad-j@student.42.fr>          +#+  +:+       +#+        */
+/*   By: imonazad <imonazad@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/10 19:59:59 by esamad-j          #+#    #+#             */
-/*   Updated: 2023/02/10 21:10:22 by esamad-j         ###   ########.fr       */
+/*   Updated: 2023/02/11 16:10:33 by imonazad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,19 +25,23 @@ char	*get_next_line(int fd)
   int i;
   
   i = 1;
-  buffer = ft_calloc(sizeof(char), BUFFER_SIZE);
+  /* buffer = ft_calloc(sizeof(char), BUFFER_SIZE);
   i = read(fd, buffer, BUFFER_SIZE);
-  printf("%ld\n", ft_strchr(buffer, 10) - buffer);
+  printf("%s",buffer);
+  printf("_%d_\n", ft_strchr(buffer, '\n'));
   
-  // ft_substr(buffer, 0, )
-return (NULL);
-
+  aux = ft_substr(buffer, 0, ft_strchr(buffer, '\n'));
+  free(buffer);
+  printf("%s",aux);
+  return (aux);
+ */
   /* if(ft_strchr(resto, 10) == 0) */
- /*  while (i >= 0)
+  while (i >= 0)
   {
     buffer = ft_calloc(sizeof(char), BUFFER_SIZE);
     i = read(fd, buffer, BUFFER_SIZE);
-    while(ft_strchr(buffer, 10) == 0)
+    printf("buffer:%s",buffer);
+    while(ft_strchr(buffer, 10) == -1)
       {
         aux = ft_strjoin(resto, buffer);
         free(resto);
@@ -45,11 +49,13 @@ return (NULL);
         buffer = ft_calloc(sizeof(char), BUFFER_SIZE);
         i += read(fd, buffer, BUFFER_SIZE);
         resto = aux;
+        printf("%s",resto);
       }
       
-  } */
+      
+  }
   
-    
+    return(0);
 }
 
 int	main(void)
@@ -66,8 +72,8 @@ int	main(void)
     leido = get_next_line(fd);
     printf("---main---\n");
     printf("%s", leido);
-    free(leido);
-    /* leido = get_next_line(fd);
+    /* free(leido);
+    leido = get_next_line(fd);
     printf("---main---\n");
     printf("%s", leido);
     free(leido);
