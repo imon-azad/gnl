@@ -6,7 +6,7 @@
 /*   By: esamad-j <esamad-j@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/05 16:57:04 by esamad-j          #+#    #+#             */
-/*   Updated: 2023/02/12 02:47:07 by esamad-j         ###   ########.fr       */
+/*   Updated: 2023/02/14 01:28:52 by esamad-j         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ int	ft_strchr(const char *s, char c)
 	int		i;
 	char	aux;
 	if(!s)
-		return(0);
+		return(-1);
 	i = 0;
 	aux = c;
 	while (s[i] != '\0')
@@ -67,11 +67,11 @@ char	*ft_substr(char const *s, unsigned int start, size_t len)
 	size_t	len_s;
 	char	*new;
 
-	len_s = strlen(s);
+	len_s = ft_strlen(s);
 	if (len + start > len_s)
 		len = len_s - start;
 	if (start > len_s)
-		return (strdup(""));
+		return (ft_strdup(""));
 	if (start == 0 && len == 0)
 		return ("\n");
 	
@@ -79,7 +79,7 @@ char	*ft_substr(char const *s, unsigned int start, size_t len)
 	if (new == NULL)
 		return (0);
 	i = 0;
-	while (len != -1)
+	while ((int)len != -1)
 	{
 			new[i] = s[start];
 			i++;
