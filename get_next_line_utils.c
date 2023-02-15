@@ -6,7 +6,7 @@
 /*   By: esamad-j <esamad-j@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/05 16:57:04 by esamad-j          #+#    #+#             */
-/*   Updated: 2023/02/14 01:28:52 by esamad-j         ###   ########.fr       */
+/*   Updated: 2023/02/14 03:18:46 by esamad-j         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,8 +72,8 @@ char	*ft_substr(char const *s, unsigned int start, size_t len)
 		len = len_s - start;
 	if (start > len_s)
 		return (ft_strdup(""));
-	if (start == 0 && len == 0)
-		return ("\n");
+	/* if (start == 0 && len == 0)
+		return (ft_calloc(1,1)); */
 	
 	new = malloc(sizeof(char) * (len + 1));
 	if (new == NULL)

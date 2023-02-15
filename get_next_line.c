@@ -6,7 +6,7 @@
 /*   By: esamad-j <esamad-j@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/10 19:59:59 by esamad-j          #+#    #+#             */
-/*   Updated: 2023/02/14 01:37:58 by esamad-j         ###   ########.fr       */
+/*   Updated: 2023/02/15 02:38:40 by esamad-j         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,9 +16,7 @@ char *ft_read(int fd, size_t *byte_read, char *resto)
 {
   char *aux;
   char *buffer;
-  int i;
-
-  i = 0;
+//printf("a");
   if (!resto)
     resto = ft_calloc(1,1);
   if(ft_strchr(resto, 10) != -1)
@@ -27,24 +25,25 @@ char *ft_read(int fd, size_t *byte_read, char *resto)
   if (!buffer)
     return (NULL);
   *byte_read += read(fd, buffer, BUFFER_SIZE);
+  
   if ((int)*byte_read == -1)
   {
     free(buffer);
     free(resto);
     return (NULL);
   }
-  if (buffer[i] == '\0')
+ /*  if (buffer[i] == '\0' && byte_read)
   { 
     while (resto[i] != '\0')
       i++;
     resto[i] = '\n';
-  } 
-  //printf("==%zu==",*byte_read);
+  }  */
+  
   aux = ft_strjoin(resto, buffer);
   free(resto);
   free(buffer);
   resto = aux;
-  
+  //printf("fin");
   return (resto);
 }
 
@@ -69,20 +68,31 @@ char	*get_next_line(int fd)
   static char *resto = NULL;
   size_t byte_read = 0;
   char *aux;
-
+  int i = 0;
   aux = NULL;
   if (fd < 0 || BUFFER_SIZE <= 0)
 		return (0);
   //printf("^%s^",resto);
   resto = ft_read(fd, &byte_read, resto);
-  if (!resto)
-    return (NULL);
-  while(ft_strchr(resto, 10) == -1)
+  //printf("a");
+  if (!resto[i])
+  {
+    return (aux);
+  }
+  while(ft_strchr(resto, 10) == -1 && byte_read != 0)
   {
     resto = ft_read(fd, &byte_read, resto);
-    if (!resto)
+    if (byte_read == 0)
+      break;
+    if (resto == NULL)
       return (NULL);
     //printf("a");
+  }
+  if(ft_strchr(resto, 10) == -1)
+  {
+    while (resto[i] != '\0')
+      i++;
+    resto[i] = '\n';
   }
   if(ft_strchr(resto, 10) != -1)
   {
@@ -94,6 +104,11 @@ char	*get_next_line(int fd)
     return(aux);
 }
 
+void leaksssss()
+{
+	system ("leaks a.out");
+	return;
+}
 /* int	main(void)
 {
 	int		fd;
@@ -128,7 +143,7 @@ char	*get_next_line(int fd)
     leido = get_next_line(fd);
     printf("---main---\n");
     printf("%s", leido);
-    
+     
    while (leido)
     {
     printf("%s", leido);
@@ -139,5 +154,6 @@ char	*get_next_line(int fd)
     
   free(leido);
 	close(fd);
+  //atexit(leaksssss);
 	return (0);
 } */
