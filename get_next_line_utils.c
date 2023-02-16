@@ -6,13 +6,13 @@
 /*   By: esamad-j <esamad-j@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/05 16:57:04 by esamad-j          #+#    #+#             */
-/*   Updated: 2023/02/14 03:18:46 by esamad-j         ###   ########.fr       */
+/*   Updated: 2023/02/16 19:42:22 by esamad-j         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
-char	*ft_strjoin(char const *str1, char const *str2)
+char	*ft_strjoin_gnl(char *str1, char *str2)
 {
 	int		i;
 	int		j;
@@ -37,16 +37,17 @@ char	*ft_strjoin(char const *str1, char const *str2)
 		j++;
 	}
 	new_str[i] = 0;
+	free(str1);
 	return (new_str);
-	
 }
 
-int	ft_strchr(const char *s, char c)
+int	ft_strchr_gnl(const char *s, char c)
 {
 	int		i;
 	char	aux;
-	if(!s)
-		return(-1);
+
+	if (!s)
+		return (-1);
 	i = 0;
 	aux = c;
 	while (s[i] != '\0')
@@ -57,7 +58,6 @@ int	ft_strchr(const char *s, char c)
 		}
 		i++;
 	}
-	
 	return (-1);
 }
 
@@ -67,24 +67,21 @@ char	*ft_substr(char const *s, unsigned int start, size_t len)
 	size_t	len_s;
 	char	*new;
 
+	if (!s)
+		return (NULL);
 	len_s = ft_strlen(s);
 	if (len + start > len_s)
 		len = len_s - start;
-	if (start > len_s)
+	if (start > len_s || len == 0)
 		return (ft_strdup(""));
-	/* if (start == 0 && len == 0)
-		return (ft_calloc(1,1)); */
-	
-	new = malloc(sizeof(char) * (len + 1));
+	new = (char *)malloc(sizeof(char) * (len + 1));
 	if (new == NULL)
 		return (0);
 	i = 0;
-	while ((int)len != -1)
+	while (s[i + start] != '\0')
 	{
-			new[i] = s[start];
-			i++;
-			start++;
-			len --;
+		new[i] = s[start + i];
+		i++;
 	}
 	new[i] = '\0';
 	return (new);
@@ -93,13 +90,15 @@ char	*ft_substr(char const *s, unsigned int start, size_t len)
 size_t	ft_strlen(const char *s)
 {
 	size_t	cont;
-	if(!s)
+
+	if (!s)
 		return (0);
 	cont = 0;
 	while (s[cont] != '\0')
 		cont++;
 	return (cont);
 }
+
 char	*ft_strdup(char *src)
 {
 	int		i;
