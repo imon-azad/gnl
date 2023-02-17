@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: esamad-j <esamad-j@student.42madrid.com    +#+  +:+       +#+        */
+/*   By: imonazad <imonazad@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/10 19:59:59 by esamad-j          #+#    #+#             */
-/*   Updated: 2023/02/16 19:53:01 by esamad-j         ###   ########.fr       */
+/*   Updated: 2023/02/16 23:13:17 by imonazad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,37 +74,31 @@ char *primersalto(char *resto)
     aux[i] = resto[i];
     i++;
   }
-  
   aux[i] = '\n';
-
   return(aux);
-  
 }
+
 char	*get_next_line(int fd)
 {
   static char *resto = NULL;
   char *aux;
-  aux = NULL;
   if (fd < 0 || BUFFER_SIZE <= 0)
 		return (0);
+  aux = NULL;
   resto = ft_read(fd, resto);
  
   if(!resto[0])
     return(aux);
-  if(ft_strchr_gnl(resto, 10) != -1 || ft_strchr_gnl(resto, 10) == -1  )
-  {
-    // printf("SOBRA==%s==\n",ft_substr(resto, ft_strchr(resto, 10) + 1, byte_read));
+  
     aux = primersalto(resto);
     resto = guardar(resto);
-    //printf("^%s^",resto);
-  }
+  
     return(aux);
 }
 
 void leaksssss()
 {
-	system ("leaks a.out");
-	return;
+	system ("leaks -q a.out");
 }
 /* int	main(void)
 {
@@ -124,6 +118,7 @@ void leaksssss()
 } */
 int	main(void)
 {
+  atexit(leaksssss);
 	char *leido;
   int fd;
 	fd = open("hola.txt", O_RDONLY);
@@ -144,6 +139,6 @@ int	main(void)
   
   free(leido);
 	close(fd);
-  //atexit(leaksssss);
+  
 	return (0);
 }

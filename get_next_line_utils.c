@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line_utils.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: esamad-j <esamad-j@student.42madrid.com    +#+  +:+       +#+        */
+/*   By: imonazad <imonazad@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/05 16:57:04 by esamad-j          #+#    #+#             */
-/*   Updated: 2023/02/16 19:42:22 by esamad-j         ###   ########.fr       */
+/*   Updated: 2023/02/16 23:05:40 by imonazad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,10 @@ char	*ft_strjoin_gnl(char *str1, char *str2)
 	new_len = (ft_strlen(str1) + ft_strlen(str2));
 	new_str = malloc(sizeof(char) * (new_len + 1));
 	if (!new_str || !str1 || !str2)
+	{
+		free(new_str);
 		return (0);
+	}
 	while (str1[i] != '\0')
 	{
 		new_str[i] = str1[i];
