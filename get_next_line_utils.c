@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line_utils.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: imonazad <imonazad@student.42.fr>          +#+  +:+       +#+        */
+/*   By: esamad-j <esamad-j@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/05 16:57:04 by esamad-j          #+#    #+#             */
-/*   Updated: 2023/02/16 23:05:40 by imonazad         ###   ########.fr       */
+/*   Updated: 2023/02/20 15:12:51 by esamad-j         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,20 +14,17 @@
 
 char	*ft_strjoin_gnl(char *str1, char *str2)
 {
-	int		i;
-	int		j;
+	size_t	i;
+	size_t	j;
 	char	*new_str;
-	size_t	new_len;
 
 	i = 0;
 	j = 0;
-	new_len = (ft_strlen(str1) + ft_strlen(str2));
-	new_str = malloc(sizeof(char) * (new_len + 1));
-	if (!new_str || !str1 || !str2)
-	{
-		free(new_str);
-		return (0);
-	}
+	if (!str1)
+		str1 = ft_calloc(1, 1);
+	if (!str1 || !str2)
+		return (NULL);
+	new_str = ft_calloc(sizeof(char), (ft_strlen(str1) + ft_strlen(str2) + 1));
 	while (str1[i] != '\0')
 	{
 		new_str[i] = str1[i];
@@ -39,7 +36,7 @@ char	*ft_strjoin_gnl(char *str1, char *str2)
 		i++;
 		j++;
 	}
-	new_str[i] = 0;
+	new_str[i] = '\0';
 	free(str1);
 	return (new_str);
 }
@@ -62,32 +59,6 @@ int	ft_strchr_gnl(const char *s, char c)
 		i++;
 	}
 	return (-1);
-}
-
-char	*ft_substr(char const *s, unsigned int start, size_t len)
-{
-	size_t	i;
-	size_t	len_s;
-	char	*new;
-
-	if (!s)
-		return (NULL);
-	len_s = ft_strlen(s);
-	if (len + start > len_s)
-		len = len_s - start;
-	if (start > len_s || len == 0)
-		return (ft_strdup(""));
-	new = (char *)malloc(sizeof(char) * (len + 1));
-	if (new == NULL)
-		return (0);
-	i = 0;
-	while (s[i + start] != '\0')
-	{
-		new[i] = s[start + i];
-		i++;
-	}
-	new[i] = '\0';
-	return (new);
 }
 
 size_t	ft_strlen(const char *s)
@@ -132,8 +103,8 @@ void	*ft_calloc(size_t count, size_t size)
 		return (0);
 	i = 0;
 	new = (char *)malloc(count * size);
-	if (new == NULL)
-		return (0);
+	if (!new)
+		return (NULL);
 	while (i < (int)(count * size))
 	{
 		new[i] = 0;
