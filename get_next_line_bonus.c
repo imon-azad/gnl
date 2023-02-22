@@ -1,22 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line.c                                    :+:      :+:    :+:   */
+/*   get_next_line_bonus.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: esamad-j <esamad-j@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/10 19:59:59 by esamad-j          #+#    #+#             */
-/*   Updated: 2023/02/22 16:49:50 by esamad-j         ###   ########.fr       */
+/*   Updated: 2023/02/22 19:13:21 by esamad-j         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "get_next_line.h"
+#include "get_next_line_bonus.h"
 
 char	*ft_read(int fd, char *saved)
 {
 	char	*buffer;
 	int		byte_read;
 
+	if (fd < 0 || BUFFER_SIZE <= 0)
+		return (NULL);
 	byte_read = 1;
 	if (ft_strchr_gnl(saved, 10) != -1)
 		return (saved);
@@ -87,15 +89,15 @@ char	*first_line(char *saved)
 
 char	*get_next_line(int fd)
 {
-	static char	*saved = NULL;
+	static char	*saved[1024];
 	char		*line;
 
 	if (fd < 0 || BUFFER_SIZE <= 0)
 		return (NULL);
 	line = NULL;
-	saved = ft_read(fd, saved);
-	line = first_line(saved);
-	saved = save_remain(saved);
+	saved[fd] = ft_read(fd, saved[fd]);
+	line = first_line(saved[fd]);
+	saved[fd] = save_remain(saved[fd]);
 	return (line);
 }
 
