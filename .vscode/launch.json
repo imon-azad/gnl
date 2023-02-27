@@ -7,7 +7,7 @@
             "name": "C++ Launch",
             "type": "cppdbg",
             "request": "launch",
-            "program": "/Users/marian/Desktop/gnl/a.out",
+            "program": "/Users/imonazad/Desktop/gnl/a.out",
             "args": [],
             "stopAtEntry": false,
             "cwd": "${workspaceFolder}",

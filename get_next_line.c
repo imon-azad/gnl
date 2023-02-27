@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: esamad-j <esamad-j@student.42.fr>          +#+  +:+       +#+        */
+/*   By: imonazad <imonazad@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/10 19:59:59 by esamad-j          #+#    #+#             */
-/*   Updated: 2023/02/22 16:49:50 by esamad-j         ###   ########.fr       */
+/*   Updated: 2023/02/25 02:40:16 by imonazad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,8 @@ char	*ft_read(int fd, char *saved)
 	if (ft_strchr_gnl(saved, 10) != -1)
 		return (saved);
 	buffer = ft_calloc(sizeof(char), BUFFER_SIZE + 1);
+	if (!buffer)
+		return (NULL);
 	while ((ft_strchr_gnl(saved, 10) == -1) && byte_read)
 	{
 		byte_read = read(fd, buffer, BUFFER_SIZE);
@@ -74,6 +76,8 @@ char	*first_line(char *saved)
 	if (saved[i])
 		i++;
 	line = ft_calloc((i + 1), sizeof(char));
+	if (!line)
+		return (NULL);
 	i = 0;
 	while (saved[i] && saved[i] != '\n')
 	{
@@ -99,7 +103,7 @@ char	*get_next_line(int fd)
 	return (line);
 }
 
-/* 
+
 void	leaksssss(void)
 {
 	system ("leaks -q a.out");
@@ -129,4 +133,4 @@ int	main(void)
 	close(fd);
 	
 	return (0);
-} */
+}

@@ -8,7 +8,7 @@
                 "-fdiagnostics-color=always",
                 "-g",
                 "${file}",
-                "/Users/marian/Desktop/gnl/get_next_line_utils.c",
+                "/Users/imonazad/Desktop/gnl/get_next_line_utils.c",
                 "-o",
                 "${fileDirname}/a.out"
             ],
